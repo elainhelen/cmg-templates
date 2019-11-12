@@ -1,3 +1,53 @@
+// {
+//     "parameters": {
+//         "poolId": {
+//             "type": "string",
+//             "defaultValue": "mpiPool",
+//             "metadata": {
+//                 "description": "The id of Azure Batch pool"
+//             }
+//         },
+//         "vmSize": {
+//             "type": "string",
+//             "defaultValue": "",
+//             "metadata": {
+//                 "description": "The size of the virtual machines that can run MPI jobs"
+//             },
+//             "allowedValues": [
+//                 "STANDARD_A1"
+//             ]
+//         },
+//         "vmCount": {
+//             "type": "int",
+//             "defaultValue": 2,
+//             "metadata": {
+//                 "description": "The number of the virtual machines"
+//             }
+//         }
+//     },
+//     "variables": {
+//         "osType": {
+//             "publisher": "a",
+//             "offer": "b",
+//             "sku": "c",
+//             "version": "d"
+//         }
+//     },
+//     "pool": {
+//         "type": "Microsoft.Batch/batchAccounts/pools",
+//         "properties": {
+//             "id": "[parameters('poolId')]",
+//             "virtualMachineConfiguration": {
+//                 "imageReference": "[variables('osType')]",
+//                 "nodeAgentSKUId": ""
+//             },
+//             "vmSize": "[parameters('vmSize')]",
+//             "targetDedicatedNodes": "[parameters('vmCount')]",
+//             "enableAutoScale": false
+//         }
+//     }
+// }
+
 {
     "parameters": {
         "poolId": {
