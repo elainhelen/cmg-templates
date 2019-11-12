@@ -28,7 +28,7 @@ Under the `[templates/..]` folder:
   * Create a foler with the id of the action [templates/myappId/actionId]
   * Create a `job.template.json` and a `pool.template.json` file inside the action foler [templates/myappId/actionId/..]
 
-Note on the pool template: all pool templates must have the `numberNodes` and `vmSize` parameters.
+  3. Note on the pool template: all pool templates must have the `numberNodes` and `vmSize` parameters.
 
 * `numberNodes`: with a default value
 * `vmSize`: with a default value
