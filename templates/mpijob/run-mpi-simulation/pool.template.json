@@ -9,12 +9,13 @@
         },
         "vmSize": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "STANDARD_H16r",
             "metadata": {
                 "description": "The size of the virtual machines that can run MPI jobs"
             },
             "allowedValues": [
-                "STANDARD_A1"
+                "STANDARD_H16r",
+                "Standard_H16mr"
             ]
         },
         "vmCount": {
@@ -27,9 +28,9 @@
     },
     "variables": {
         "osType": {
-            "publisher": "a",
-            "offer": "b",
-            "sku": "c",
+            "publisher": "OpenLogic",
+            "offer": "CentOS-HPC",
+            "sku": "7.4",
             "version": "d"
         }
     },

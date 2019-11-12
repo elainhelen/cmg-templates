@@ -1,3 +1,50 @@
 {
-    
+    "templateMetadata": {
+        "description": "Sample application template for working with CMG"
+    },
+    "parameters": {
+        "poolId": {
+            "type": "string",
+            "metadata": {
+                "description": "The Id of the pool on which to run the job"
+            }
+        },
+        "jobName": {
+            "type": "string",
+            "defaultValue": "mpiJob",
+            "metadata": {
+                "description": "The name of job",
+                "advancedType": "job-id"
+            }
+        },
+        "inputFilegroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The file group where the input files are stored",
+                "advancedType": "file-group"
+            }
+        },
+        "outputs": {
+            "type": "string",
+            "metadata": {
+                "description": "The file group where outputs will be stored",
+                "advancedType": "file-group"
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "properties": {
+            "id": "[parameters('jobName')]",
+            "displayName": "[parameters('jobName')]",
+            "onAllTasksComplete": "terminateJob",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 1
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            }
+        }
+    }
 }
