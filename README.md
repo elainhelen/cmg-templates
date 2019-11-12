@@ -4,7 +4,7 @@
 
 Templates are located in the `templates` folder. They need to follow a **strict** folder structure for Batch Explorer to be able to parese it.
 
-Under the [`templates/..`] folder:
+Under the `[templates/..]` folder:
 
 * **index.json** _Index file that reference all applications_
 * [myappId]/
