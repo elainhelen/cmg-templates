@@ -1,0 +1,7 @@
+[
+    {
+        "id": "run-mpi-simulation",
+        "name": "Run MPI Simulation",
+        "description": "This job will deploy a pool with MPI/RDMA enabled virtual machines and run simulations with MPI command."
+    }
+]
