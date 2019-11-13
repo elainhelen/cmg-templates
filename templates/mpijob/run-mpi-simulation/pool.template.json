@@ -24,6 +24,28 @@
             "metadata": {
                 "description": "The number of the virtual machines"
             }
+        },
+        "applicationId": {
+            "type": "string",
+            "defaultValue": "STARS",
+            "metadata": {
+                "description": "The name of application package"
+            },
+            "allowedValues": [
+                "STARS",
+                "GEM"
+            ]
+        },
+        "applicationVersion":{
+            "type": "string",
+            "defaultValue": "2017.23",
+            "metadata": {
+                "description": "The version of application package"
+            },
+            "allowedValues": [
+                "2017.23",
+                "2016.30"
+            ]
         }
     },
     "variables": {
@@ -31,7 +53,7 @@
             "publisher": "OpenLogic",
             "offer": "CentOS-HPC",
             "sku": "7.4",
-            "version": "d"
+            "version": "latest"
         }
     },
     "pool": {
@@ -40,11 +62,43 @@
             "id": "[parameters('poolId')]",
             "virtualMachineConfiguration": {
                 "imageReference": "[variables('osType')]",
-                "nodeAgentSKUId": ""
+                "nodeAgentSKUId": "batch.node.centos 7"
             },
             "vmSize": "[parameters('vmSize')]",
-            "targetDedicatedNodes": "[parameters('vmCount')]",
-            "enableAutoScale": false
+            "scaleSettings": {
+                "fixedScale": {
+                    "resizeTimeout": "PT15M",
+                    "targetDedicatedNodes": "[parameters('vmCount')]",
+                    "targetLowPriorityNodes": 0
+                }
+            },
+            "enableAutoScale": false,
+            "enableInterNodeCommunication": true,
+            "startTask": {
+                "commandLine": "/bin/bash -c \"sudo yum install -y gcc openssl-devel bzip2-devel libffi-devel && cd /usr/src && sudo wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz && sudo tar xzf Python-3.7.4.tgz && cd Python-3.7.4 && sudo ./configure --enable-optimizations && sudo make altinstall && sudo rm /usr/src/Python-3.7.4.tgz && python3.7 -V && sudo yum-config-manager --add-repo https://yum.repos.intel.com/mkl/setup/intel-mkl.repo && sudo rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && sudo yum install -y intel-mkl-2018.2-046\"",
+                "userIdentity": {
+                    "autoUser": {
+                        "scope": "pool",
+                        "elevationLevel": "admin"
+                    }
+                },
+                "maxTaskRetryCount": 5,
+                "waitForSuccess": true
+            },
+            "maxTasksPerNode": 1,
+            "taskSchedulingPolicy": {
+                "nodeFillType": "Spread"
+            },
+            "applicationPackages": [
+                {
+                    "id": "parameters('applicationId')",
+                    "version": "parameters('applicationVersion')"
+                }
+            ],
+            "networkConfiguration": {
+                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/hpcTest/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes",
+                "dynamicVNetAssignmentScope": "none"
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 ## 1. Templates Folder
 
-Templates are located in the `templates` folder. They need to follow a **strict** folder structure for Batch Explorer to be able to parese it.
+Templates are located in the `templates` folder. They need to follow a **strict** folder structure for Batch Explorer to be able to parse it.
 
 Under the `[templates/..]` folder:
 
