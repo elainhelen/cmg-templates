@@ -147,7 +147,13 @@
                                 "filePath": "{fileName}"
                             }
                         ]
-                    }
+                    },
+                    "applicationPackageReferences": [
+                        {
+                            "applicationId": "[parameters('applicationId')]",
+                            "version": "[parameters('applicationVersion')]"
+                        }
+                    ]
                 }
             }
         }
