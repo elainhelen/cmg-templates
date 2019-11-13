@@ -1,3 +1,12 @@
+# vscode
+.vscode/
+
+# Examples
+examples/
+
+# Storages folder
+storages/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -102,9 +111,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-# vscode
-.vscode/
-
-# examples
-examples/
