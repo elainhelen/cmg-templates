@@ -1,6 +1,6 @@
 {
     "templateMetadata": {
-        "description": "Sample application template for working with CMG"
+        "description": "A simple application template for working with CMG MPI Jobs"
     },
     "parameters": {
         "poolId": {
@@ -13,8 +13,16 @@
             "type": "string",
             "defaultValue": "mpiJob",
             "metadata": {
-                "description": "The name of job",
+                "description": "The name of the job",
                 "advancedType": "job-id"
+            }
+        },
+        "taskId": {
+            "type": "string",
+            "defaultValue": "task01",
+            "metadata": {
+                "description": "The Id of the task",
+                "advancedType": "task-id"
             }
         },
         "inputFilegroup": {
@@ -30,6 +38,28 @@
                 "description": "The file group where outputs will be stored",
                 "advancedType": "file-group"
             }
+        },
+        "applicationId": {
+            "type": "string",
+            "defaultValue": "STARS",
+            "metadata": {
+                "description": "The name of application package"
+            },
+            "allowedValues": [
+                "STARS",
+                "GEM"
+            ]
+        },
+        "applicationVersion":{
+            "type": "string",
+            "defaultValue": "2017.23",
+            "metadata": {
+                "description": "The version of application package"
+            },
+            "allowedValues": [
+                "2017.23",
+                "2016.30"
+            ]
         }
     },
     "job": {
@@ -44,6 +74,81 @@
             },
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "taskPerFile",
+                "source": {
+                    "fileGroup": "[parameters('inputFilegroup')]"
+                },
+                "repeatTask": {
+                    "id": "[parameters('taskId')]",
+                    "displayName": "Run MPI Simulation Job",
+                    "commandLine": "/bin/bash -c \"python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py stmpi001.dat STARS 2017.23 2\"",
+                    "resourceFiles": [
+                        {
+                            "httpUrl": "{url}",
+                            "filePath": "{fileName}"
+                        }
+                    ],
+                    "outputFiles": [
+                        {
+                            "filePattern": "./*.out",
+                            "destination": {
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputs')]",
+                                    "path": "[parameters('jobName')]/"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "taskCompletion"
+                            }
+                        },
+                        {
+                            "filePattern": "./*.sr3",
+                            "destination": {
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputs')]",
+                                    "path": "[parameters('jobName')]/"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "taskCompletion"
+                            }
+                        },
+                        {
+                            "filePattern": "../std*.txt",
+                            "destination": {
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputs')]",
+                                    "path": "[parameters('jobName')]/"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "taskCompletion"
+                            }
+                        }
+                    ],
+                    "userIdentity": {
+                        "autoUser": {
+                            "scope": "pool",
+                            "elevationLevel": "nonadmin"
+                        }
+                    },
+                    "multiInstanceSettings": {
+                        "numberOfInstances": 2,
+                        "coordinationCommandLine": "/bin/bash -c \"set -e; set -o pipefail; $AZ_BATCH_TASK_SHARED_DIR/coordination-cmd; wait\"",
+                        "commonResourceFiles": [
+                            {
+                                "httpUrl": "{url}",
+                                "filePath": "{fileName}"
+                            },
+                            {
+                                "httpUrl": "{url}",
+                                "filePath": "{fileName}"
+                            }
+                        ]
+                    }
+                }
             }
         }
     }

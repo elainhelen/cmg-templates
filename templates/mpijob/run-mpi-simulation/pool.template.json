@@ -24,28 +24,6 @@
             "metadata": {
                 "description": "The number of the virtual machines"
             }
-        },
-        "applicationId": {
-            "type": "string",
-            "defaultValue": "STARS",
-            "metadata": {
-                "description": "The name of application package"
-            },
-            "allowedValues": [
-                "STARS",
-                "GEM"
-            ]
-        },
-        "applicationVersion":{
-            "type": "string",
-            "defaultValue": "2017.23",
-            "metadata": {
-                "description": "The version of application package"
-            },
-            "allowedValues": [
-                "2017.23",
-                "2016.30"
-            ]
         }
     },
     "variables": {
@@ -91,8 +69,12 @@
             },
             "applicationPackages": [
                 {
-                    "id": "parameters('applicationId')",
-                    "version": "parameters('applicationVersion')"
+                    "id": "STARS",
+                    "version": "2017.23"
+                },
+                {
+                    "id": "GEM",
+                    "version": "2016.30"
                 }
             ],
             "networkConfiguration": {
