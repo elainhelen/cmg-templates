@@ -78,7 +78,7 @@
                 }
             ],
             "networkConfiguration": {
-                "subnetId": "[resourceGroup().id]/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes",
+                "subnetId": "\"[resourceGroup().id]\"/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes",
                 "dynamicVNetAssignmentScope": "none"
             }
         }
