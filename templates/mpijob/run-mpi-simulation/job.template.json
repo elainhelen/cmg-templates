@@ -39,13 +39,6 @@
                 "advancedType": "file-group"
             }
         },
-        "outputs": {
-            "type": "string",
-            "metadata": {
-                "description": "The file group where outputs will be stored",
-                "advancedType": "file-group"
-            }
-        },
         "applicationId": {
             "type": "string",
             "defaultValue": "STARS",
@@ -89,22 +82,8 @@
                     "commandLine": "/bin/bash -c 'ls -la'",
                     "multiInstanceSettings": {
                         "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                        "coordinationCommandLine": "/bin/bash -c 'mv ../stmpi001.dat ../wd/stmpi001.dat; wait'",
-                        "commonResourceFiles": [
-                            {
-                                "source": {
-                                    "fileGroup": "[parameters('inputFilegroup')]",
-                                    "prefix": "common/stmpi001.dat"
-                                }
-                            }
-                        ]
-                    },
-                    "applicationPackageReferences": [
-                        {
-                            "applicationId": "[parameters('applicationId')]",
-                            "version": "[parameters('applicationVersion')]"
-                        }
-                    ]
+                        "coordinationCommandLine": "/bin/bash -c 'ls -la'"
+                    }
                 }
             }
         }
