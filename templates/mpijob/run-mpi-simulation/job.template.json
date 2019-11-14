@@ -95,12 +95,6 @@
                             }
                         }
                     ],
-                    "userIdentity": {
-                        "autoUser": {
-                            "scope": "pool",
-                            "elevationLevel": "nonadmin"
-                        }
-                    },
                     "multiInstanceSettings": {
                         "numberOfInstances": "[parameters('dedicatedVmCount')]",
                         "coordinationCommandLine": "/bin/bash -c 'mv ../stmpi001.dat ../wd/stmpi001.dat; wait'",
@@ -113,44 +107,6 @@
                             }
                         ]
                     },
-                    "outputFiles": [
-                        {
-                            "filePattern": "./*.out",
-                            "destination": {
-                                "autoStorage": {
-                                    "fileGroup": "[parameters('outputs')]",
-                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
-                                }
-                            },
-                            "uploadOptions": {
-                                "uploadCondition": "taskCompletion"
-                            }
-                        },
-                        {
-                            "filePattern": "./*.sr3",
-                            "destination": {
-                                "autoStorage": {
-                                    "fileGroup": "[parameters('outputs')]",
-                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
-                                }
-                            },
-                            "uploadOptions": {
-                                "uploadCondition": "taskCompletion"
-                            }
-                        },
-                        {
-                            "filePattern": "../std*.txt",
-                            "destination": {
-                                "autoStorage": {
-                                    "fileGroup": "[parameters('outputs')]",
-                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
-                                }
-                            },
-                            "uploadOptions": {
-                                "uploadCondition": "taskCompletion"
-                            }
-                        }
-                    ],
                     "applicationPackageReferences": [
                         {
                             "applicationId": "[parameters('applicationId')]",
