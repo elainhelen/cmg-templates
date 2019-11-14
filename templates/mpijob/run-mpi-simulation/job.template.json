@@ -30,7 +30,7 @@
                         "commandLine": "/bin/bash -c 'ls -la'",
                         "multiInstanceSettings": {
                             "numberOfInstances": 2,
-                            "coordinationCommandLine": "/bin/bash -c 'ls -la'"
+                            "coordinationCommandLine": "/bin/bash -c 'mkdir file'"
                         }
                     }
                 ]
