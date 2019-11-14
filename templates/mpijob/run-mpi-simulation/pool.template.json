@@ -32,7 +32,8 @@
             "offer": "CentOS-HPC",
             "sku": "7.4",
             "version": "latest"
-        }
+        },
+        "subnetId": "[resourceId('hpcTest', 'Microsoft.Network/virtualNetworks/subnets', 'hpcTestVnet', 'subnet_hpcnodes')]"
     },
     "pool": {
         "type": "Microsoft.Batch/batchAccounts/pools",
@@ -78,7 +79,7 @@
                 }
             ],
             "networkConfiguration": {
-                "subnetId": "[concat(resourceGroup().id,'/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes')]",
+                "subnetId": "[variables('subnetId')]",
                 "dynamicVNetAssignmentScope": "none"
             }
         }
