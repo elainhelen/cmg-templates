@@ -86,7 +86,6 @@
                 "type": "taskCollection",
                 "tasks": {
                     "id": "[parameters('taskName')]",
-                    "displayName": "[parameters('taskName')]",
                     "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py stmpi001.dat STARS 2017.23 2'",
                     "resourceFiles": [
                         {
