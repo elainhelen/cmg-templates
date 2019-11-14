@@ -37,6 +37,16 @@
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
+            "jobPreparationTask": {
+                "resourceFiles": [
+                    {
+                        "source": {
+                            "fileGroup": "[parameters('inputFileGroup')]",
+                            "prefix": "common/"
+                        }
+                    }
+                ]
+            },
             "taskFactory": {
                 "type": "taskCollection",
                 "tasks": [
