@@ -27,7 +27,11 @@
                 "tasks": [
                     {
                         "id": "Task01",
-                        "commandLine": "/bin/bash -c 'ls -la'"
+                        "commandLine": "/bin/bash -c 'ls -la'",
+                        "multiInstanceSettings": {
+                            "numberOfInstances": 2,
+                            "coordinationCommandLine": "/bin/bash -c 'ls -la'"
+                        }
                     }
                 ]
             }
