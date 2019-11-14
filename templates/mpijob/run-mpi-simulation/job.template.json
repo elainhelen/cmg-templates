@@ -78,10 +78,10 @@
             "taskFactory": {
                 "type": "taskCollection",
                 "tasks": {
-                    "id": "[parameters('taskName')]",
+                    "id": "mpiJob01",
                     "commandLine": "/bin/bash -c 'ls -la'",
                     "multiInstanceSettings": {
-                        "numberOfInstances": "[parameters('dedicatedVmCount')]",
+                        "numberOfInstances": 2,
                         "coordinationCommandLine": "/bin/bash -c 'ls -la'"
                     }
                 }
