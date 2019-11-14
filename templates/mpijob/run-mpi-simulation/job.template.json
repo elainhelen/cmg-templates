@@ -3,12 +3,6 @@
         "description": "A simple application template for working with CMG MPI Jobs"
     },
     "parameters": {
-        "poolId": {
-            "type": "string",
-            "metadata": {
-                "description": "The id of the pool on which to run the job"
-            }
-        },
         "jobName": {
             "type": "string",
             "defaultValue": "mpiJob",
@@ -21,8 +15,7 @@
             "type": "string",
             "defaultValue": "task01",
             "metadata": {
-                "description": "The id of the task",
-                "advancedType": "task-id"
+                "description": "The id of the task"
             }
         },
         "dedicatedVmCount": {
