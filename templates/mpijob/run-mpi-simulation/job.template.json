@@ -38,7 +38,7 @@
                 "poolId": "[parameters('poolId')]"
             },
             "jobPreparationTask": {
-                "commandLine": "/bin/bash -c 'ls -la'",
+                "commandLine": "/bin/bash -c 'printenv'",
                 "runElevated": true,
                 "waitForSuccess": true,
                 "resourceFiles": [
