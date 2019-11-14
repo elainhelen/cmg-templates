@@ -32,13 +32,6 @@
                 "description": "The number of dedicated VM nodes, must be the same as the number of nodes in the pool."
             }
         },
-        "inputFilegroup": {
-            "type": "string",
-            "metadata": {
-                "description": "The file group where the input files are stored",
-                "advancedType": "file-group"
-            }
-        },
         "applicationId": {
             "type": "string",
             "defaultValue": "STARS",
@@ -66,14 +59,13 @@
         "type": "Microsoft.Batch/batchAccounts/jobs",
         "properties": {
             "id": "[parameters('jobName')]",
-            "displayName": "[parameters('jobName')]",
             "onAllTasksComplete": "terminateJob",
             "constraints": {
                 "maxWallClockTime": "PT5H",
                 "maxTaskRetryCount": 0
             },
             "poolInfo": {
-                "poolId": "[parameters('poolId')]"
+                "poolId": "mpiPool"
             },
             "taskFactory": {
                 "type": "taskCollection",
