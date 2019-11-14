@@ -1,0 +1,36 @@
+{
+    "parameters": {
+        "poolId": {
+            "type": "string",
+            "metadata": {
+                "description": "The id of the pool on which to run the job"
+            }
+        },
+        "jobName": {
+            "type": "string",
+            "defaultValue": "mpiJob",
+            "metadata": {
+                "description": "The name of the job",
+                "advancedType": "job-id"
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "properties": {
+            "id": "[parameters('jobName')]",
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "taskCollection",
+                "tasks": [
+                    {
+                        "id": "Task01",
+                        "commandLine": "/bin/bash -c 'ls -la'"
+                    }
+                ]
+            }
+        }
+    }
+}
