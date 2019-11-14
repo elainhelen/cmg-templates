@@ -6,7 +6,7 @@
         "poolId": {
             "type": "string",
             "metadata": {
-                "description": "The Id of the pool on which to run the job"
+                "description": "The id of the pool on which to run the job"
             }
         },
         "jobName": {
@@ -21,8 +21,15 @@
             "type": "string",
             "defaultValue": "task01",
             "metadata": {
-                "description": "The Id of the task",
+                "description": "The id of the task",
                 "advancedType": "task-id"
+            }
+        },
+        "dedicatedVmCount": {
+            "type": "int",
+            "defaultValue": 2,
+            "metadata": {
+                "description": "The number of dedicated VM nodes, must be the same as the number of nodes in the pool."
             }
         },
         "inputFilegroup": {
@@ -70,33 +77,50 @@
             "onAllTasksComplete": "terminateJob",
             "constraints": {
                 "maxWallClockTime": "PT5H",
-                "maxTaskRetryCount": 1
+                "maxTaskRetryCount": 0
             },
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
             "taskFactory": {
-                "type": "taskPerFile",
-                "source": {
-                    "fileGroup": "[parameters('inputFilegroup')]"
-                },
-                "repeatTask": {
+                "type": "taskCollection",
+                "task": {
                     "id": "[parameters('taskName')]",
                     "displayName": "[parameters('taskName')]",
                     "commandLine": "/bin/bash -c \"python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py stmpi001.dat STARS 2017.23 2\"",
                     "resourceFiles": [
                         {
-                            "httpUrl": "{url}",
-                            "filePath": "{fileName}"
+                            "source": {
+                                "fileGroup": "[parameters('inputFilegroup')]",
+                                "prefix": "runscript/"
+                            }
                         }
                     ],
+                    "userIdentity": {
+                        "autoUser": {
+                            "scope": "pool",
+                            "elevationLevel": "nonadmin"
+                        }
+                    },
+                    "multiInstanceSettings": {
+                        "numberOfInstances": "[parameters('dedicatedVmCount')]",
+                        "coordinationCommandLine": "/bin/bash -c \"set -e; set -o pipefail; mv ../stmpi001.dat ../wd/stmpi001.dat; wait\"",
+                        "commonResourceFiles": [
+                            {
+                                "source": {
+                                    "fileGroup": "[parameters('inputFilegroup')]",
+                                    "prefix": "common/"
+                                }
+                            }
+                        ]
+                    },
                     "outputFiles": [
                         {
                             "filePattern": "./*.out",
                             "destination": {
                                 "autoStorage": {
                                     "fileGroup": "[parameters('outputs')]",
-                                    "path": "[parameters('jobName')]/"
+                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
                                 }
                             },
                             "uploadOptions": {
@@ -108,7 +132,7 @@
                             "destination": {
                                 "autoStorage": {
                                     "fileGroup": "[parameters('outputs')]",
-                                    "path": "[parameters('jobName')]/"
+                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
                                 }
                             },
                             "uploadOptions": {
@@ -120,7 +144,7 @@
                             "destination": {
                                 "autoStorage": {
                                     "fileGroup": "[parameters('outputs')]",
-                                    "path": "[parameters('jobName')]/"
+                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
                                 }
                             },
                             "uploadOptions": {
@@ -128,26 +152,6 @@
                             }
                         }
                     ],
-                    "userIdentity": {
-                        "autoUser": {
-                            "scope": "pool",
-                            "elevationLevel": "nonadmin"
-                        }
-                    },
-                    "multiInstanceSettings": {
-                        "numberOfInstances": 2,
-                        "coordinationCommandLine": "/bin/bash -c \"set -e; set -o pipefail; $AZ_BATCH_TASK_SHARED_DIR/coordination-cmd; wait\"",
-                        "commonResourceFiles": [
-                            {
-                                "httpUrl": "{url}",
-                                "filePath": "{fileName}"
-                            },
-                            {
-                                "httpUrl": "{url}",
-                                "filePath": "{fileName}"
-                            }
-                        ]
-                    },
                     "applicationPackageReferences": [
                         {
                             "applicationId": "[parameters('applicationId')]",
