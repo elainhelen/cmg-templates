@@ -19,7 +19,7 @@
         "type": "Microsoft.Batch/batchAccounts/jobs",
         "properties": {
             "id": "[parameters('jobName')]",
-            "displayName": "[parameters(''jobName)]",
+            "displayName": "[parameters('jobName')]",
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
