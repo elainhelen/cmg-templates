@@ -44,8 +44,7 @@
                 "resourceFiles": [
                     {
                         "source": {
-                            "fileGroup": "[parameters('inputFileGroup')]",
-                            "prefix": "common/"
+                            "fileGroup": "[parameters('inputFileGroup')]"
                         }
                     }
                 ]
