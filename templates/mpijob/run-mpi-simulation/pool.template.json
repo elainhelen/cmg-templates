@@ -24,6 +24,10 @@
             "metadata": {
                 "description": "The number of the dedicated VM nodes"
             }
+        },
+        "subnetId": {
+            "type": "string",
+            "defaultValue": "[resourceId('hpcTest', 'Microsoft.Network/virtualNetworks/subnets', 'hpcTestVnet', 'subnet_hpcnodes')]"
         }
     },
     "variables": {
@@ -32,8 +36,7 @@
             "offer": "CentOS-HPC",
             "sku": "7.4",
             "version": "latest"
-        },
-        "subnetId": "[resourceId('hpcTest', 'Microsoft.Network/virtualNetworks/subnets', 'hpcTestVnet', 'subnet_hpcnodes')]"
+        }
     },
     "pool": {
         "type": "Microsoft.Batch/batchAccounts/pools",
@@ -79,7 +82,7 @@
                 }
             ],
             "networkConfiguration": {
-                "subnetId": "[variables('subnetId')]",
+                "subnetId": "[parameters('subnetId')]",
                 "dynamicVNetAssignmentScope": "none"
             }
         }
