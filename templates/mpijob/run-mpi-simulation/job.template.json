@@ -92,7 +92,7 @@
                         {
                             "source": {
                                 "fileGroup": "[parameters('inputFilegroup')]",
-                                "prefix": "runscript/"
+                                "prefix": "runscript/runmpisimulation.py"
                             }
                         }
                     ],
@@ -109,7 +109,7 @@
                             {
                                 "source": {
                                     "fileGroup": "[parameters('inputFilegroup')]",
-                                    "prefix": "common/"
+                                    "prefix": "common/stmpi001.dat"
                                 }
                             }
                         ]
