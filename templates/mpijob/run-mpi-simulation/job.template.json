@@ -38,6 +38,9 @@
                 "poolId": "[parameters('poolId')]"
             },
             "jobPreparationTask": {
+                "commandLine": "/bin/bash -c 'ls -la'",
+                "runElevated": true,
+                "waitForSuccess": true,
                 "resourceFiles": [
                     {
                         "source": {
