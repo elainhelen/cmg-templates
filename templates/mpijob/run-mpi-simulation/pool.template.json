@@ -24,10 +24,6 @@
             "metadata": {
                 "description": "The number of the dedicated VM nodes"
             }
-        },
-        "subnetId": {
-            "type": "string",
-            "defaultValue": "[resourceId('hpcTest', 'Microsoft.Network/virtualNetworks/subnets', 'hpcTestVnet', 'subnet_hpcnodes')]"
         }
     },
     "variables": {
@@ -82,7 +78,7 @@
                 }
             ],
             "networkConfiguration": {
-                "subnetId": "[parameters('subnetId')]",
+                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/hpcTest/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes",
                 "dynamicVNetAssignmentScope": "none"
             }
         }
