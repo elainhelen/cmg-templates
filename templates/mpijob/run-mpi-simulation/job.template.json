@@ -86,15 +86,7 @@
                 "type": "taskCollection",
                 "tasks": {
                     "id": "[parameters('taskName')]",
-                    "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py stmpi001.dat STARS 2017.23 2'",
-                    "resourceFiles": [
-                        {
-                            "source": {
-                                "fileGroup": "[parameters('inputFilegroup')]",
-                                "prefix": "runscript/runmpisimulation.py"
-                            }
-                        }
-                    ],
+                    "commandLine": "/bin/bash -c 'ls -la'",
                     "multiInstanceSettings": {
                         "numberOfInstances": "[parameters('dedicatedVmCount')]",
                         "coordinationCommandLine": "/bin/bash -c 'mv ../stmpi001.dat ../wd/stmpi001.dat; wait'",
