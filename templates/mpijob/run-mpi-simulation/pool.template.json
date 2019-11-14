@@ -43,13 +43,7 @@
                 "nodeAgentSKUId": "batch.node.centos 7"
             },
             "vmSize": "[parameters('vmSize')]",
-            "scaleSettings": {
-                "fixedScale": {
-                    "resizeTimeout": "PT15M",
-                    "targetDedicatedNodes": "[parameters('dedicatedVmCount')]",
-                    "targetLowPriorityNodes": 0
-                }
-            },
+            "targetDedicatedNodes": "[parameters('dedicatedVmCount')]",
             "enableAutoScale": false,
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
