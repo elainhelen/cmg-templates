@@ -37,18 +37,6 @@
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
-            "jobPreparationTask": {
-                "commandLine": "/bin/bash -c 'printenv'",
-                "runElevated": true,
-                "waitForSuccess": true,
-                "resourceFiles": [
-                    {
-                        "source": {
-                            "fileGroup": "[parameters('inputFileGroup')]"
-                        }
-                    }
-                ]
-            },
             "taskFactory": {
                 "type": "taskCollection",
                 "tasks": [
@@ -57,7 +45,14 @@
                         "commandLine": "/bin/bash -c 'source /opt/intel/impi/5.1.3.223/bin64/mpivars.sh && export I_MPI_FABRICS=shm:dapl && export I_MPI_DAPL_PROVIDER=ofa-v2-ib0 && export I_MPI_DYNAMIC_CONNECTION=0 && mpirun -n 2 -ppn 1 -hosts $AZ_BATCH_HOST_LIST IMB-MPI1 pingpong'",
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                            "coordinationCommandLine": "/bin/bash -c 'printenv'"
+                            "coordinationCommandLine": "/bin/bash -c 'printenv'",
+                            "commonResourceFiles": [
+                                {
+                                    "source": {
+                                        "fileGroup": "[parameters('inputFileGroup')]"
+                                    }
+                                }
+                            ]
                         }
                     }
                 ]
