@@ -84,18 +84,18 @@
             },
             "taskFactory": {
                 "type": "taskCollection",
-                "task": {
+                "tasks": {
                     "id": "[parameters('taskName')]",
                     "displayName": "[parameters('taskName')]",
-                    "commandLine": "/bin/bash -c \"ls -la\"",
-                    // "resourceFiles": [
-                    //     {
-                    //         "source": {
-                    //             "fileGroup": "[parameters('inputFilegroup')]",
-                    //             "prefix": "runscript/runmpisimulation.py"
-                    //         }
-                    //     }
-                    // ],
+                    "commandLine": "/bin/bash -c \"python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py stmpi001.dat STARS 2017.23 2\"",
+                    "resourceFiles": [
+                        {
+                            "source": {
+                                "fileGroup": "[parameters('inputFilegroup')]",
+                                "prefix": "runscript/runmpisimulation.py"
+                            }
+                        }
+                    ],
                     "userIdentity": {
                         "autoUser": {
                             "scope": "pool",
@@ -104,54 +104,54 @@
                     },
                     "multiInstanceSettings": {
                         "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                        "coordinationCommandLine": "/bin/bash -c \"set -e; set -o pipefail; ls; wait\""
-                        // "commonResourceFiles": [
-                        //     {
-                        //         "source": {
-                        //             "fileGroup": "[parameters('inputFilegroup')]",
-                        //             "prefix": "common/stmpi001.dat"
-                        //         }
-                        //     }
-                        // ]
+                        "coordinationCommandLine": "/bin/bash -c \"mv ../stmpi001.dat ../wd/stmpi001.dat; wait\"",
+                        "commonResourceFiles": [
+                            {
+                                "source": {
+                                    "fileGroup": "[parameters('inputFilegroup')]",
+                                    "prefix": "common/stmpi001.dat"
+                                }
+                            }
+                        ]
                     },
-                    // "outputFiles": [
-                    //     {
-                    //         "filePattern": "./*.out",
-                    //         "destination": {
-                    //             "autoStorage": {
-                    //                 "fileGroup": "[parameters('outputs')]",
-                    //                 "path": "[parameters('jobName')]/[parameters('taskName')]"
-                    //             }
-                    //         },
-                    //         "uploadOptions": {
-                    //             "uploadCondition": "taskCompletion"
-                    //         }
-                    //     },
-                    //     {
-                    //         "filePattern": "./*.sr3",
-                    //         "destination": {
-                    //             "autoStorage": {
-                    //                 "fileGroup": "[parameters('outputs')]",
-                    //                 "path": "[parameters('jobName')]/[parameters('taskName')]"
-                    //             }
-                    //         },
-                    //         "uploadOptions": {
-                    //             "uploadCondition": "taskCompletion"
-                    //         }
-                    //     },
-                    //     {
-                    //         "filePattern": "../std*.txt",
-                    //         "destination": {
-                    //             "autoStorage": {
-                    //                 "fileGroup": "[parameters('outputs')]",
-                    //                 "path": "[parameters('jobName')]/[parameters('taskName')]"
-                    //             }
-                    //         },
-                    //         "uploadOptions": {
-                    //             "uploadCondition": "taskCompletion"
-                    //         }
-                    //     }
-                    // ],
+                    "outputFiles": [
+                        {
+                            "filePattern": "./*.out",
+                            "destination": {
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputs')]",
+                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "taskCompletion"
+                            }
+                        },
+                        {
+                            "filePattern": "./*.sr3",
+                            "destination": {
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputs')]",
+                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "taskCompletion"
+                            }
+                        },
+                        {
+                            "filePattern": "../std*.txt",
+                            "destination": {
+                                "autoStorage": {
+                                    "fileGroup": "[parameters('outputs')]",
+                                    "path": "[parameters('jobName')]/[parameters('taskName')]"
+                                }
+                            },
+                            "uploadOptions": {
+                                "uploadCondition": "taskCompletion"
+                            }
+                        }
+                    ],
                     "applicationPackageReferences": [
                         {
                             "applicationId": "[parameters('applicationId')]",
