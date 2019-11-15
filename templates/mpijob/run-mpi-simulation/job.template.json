@@ -51,12 +51,13 @@
                         },
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                            "coordinationCommandLine": "/bin/bash -c 'cat {fileName}'",
+                            "coordinationCommandLine": "/bin/bash -c 'ls -la'",
                             "commonResourceFiles": [
                                 {
                                     "source": {
                                         "fileGroup": "[parameters('inputFileGroup')]"
-                                    }
+                                    },
+                                    "filePath": "wd"
                                 }
                             ]
                         }
