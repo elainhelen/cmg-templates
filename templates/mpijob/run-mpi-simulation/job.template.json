@@ -107,7 +107,45 @@
                                     "filePath": "wd"
                                 }
                             ]
-                        }
+                        },
+                        "outputFiles": [
+                            {
+                                "filePattern": "../std*.txt",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            },
+                            {
+                                "filePattern": "./*.sr3",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            },
+                            {
+                                "filePattern": "./*.log",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            }
+                        ]
                     }
                 ]
             }
