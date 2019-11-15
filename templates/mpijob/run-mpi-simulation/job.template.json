@@ -70,7 +70,7 @@
                 "tasks": [
                     {
                         "id": "Task01",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [paramters('applicationVersion')] [parameters('dedicatedVmCount')]'",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [parameters('applicationVersion')] [parameters('dedicatedVmCount')]'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "pool",
