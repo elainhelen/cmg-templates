@@ -34,6 +34,13 @@
                 "description": "The data file name needs to be run"
             }
         },
+        "outputs": {
+            "type": "string",
+            "metadata": {
+                "description": "The file group where outputs will be stored",
+                "advancedType": "file-group"
+            }
+        },
         "applicationId": {
             "type": "string",
             "defaultValue": "STARS",
@@ -55,6 +62,13 @@
                 "2017.23",
                 "2016.30"
             ]
+        },
+        "additionalSwitches": {
+            "type": "string",
+            "defaultValue": "-log -sr3",
+            "metadata": {
+                "description": "The additional switches of CMG simulation"
+            }
         }
     },
     "job": {
@@ -62,6 +76,11 @@
         "properties": {
             "id": "[parameters('jobName')]",
             "displayName": "[parameters('jobName')]",
+            "onAllTasksComplete": "terminateJob",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 0
+            },
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
@@ -70,7 +89,7 @@
                 "tasks": [
                     {
                         "id": "Task01",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [parameters('applicationVersion')] [parameters('dedicatedVmCount')]'",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [parameters('applicationVersion')] [parameters('dedicatedVmCount')] [parameters('additionalSwitches')]'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "pool",
@@ -88,7 +107,45 @@
                                     "filePath": "wd"
                                 }
                             ]
-                        }
+                        },
+                        "outputFiles": [
+                            {
+                                "filePattern": "../std*.txt",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]/"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            },
+                            {
+                                "filePattern": "./*.sr3",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]/"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            },
+                            {
+                                "filePattern": "./*.log",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]/"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            }
+                        ]
                     }
                 ]
             }
