@@ -27,6 +27,34 @@
                 "description": "The file group where the input files are stored",
                 "advancedType": "file-group"
             }
+        },
+        "fileName": {
+            "type": "string",
+            "metadata": {
+                "description": "The data file name needs to be run"
+            }
+        },
+        "applicationId": {
+            "type": "string",
+            "defaultValue": "STARS",
+            "metadata": {
+                "description": "The name of CMG simulator"
+            },
+            "allowedValues": [
+                "STARS",
+                "GEM"
+            ]
+        },
+        "applicationVersion": {
+            "type": "string",
+            "defaultValue": "2017.23",
+            "metadata": {
+                "description": "The version number of CMG simulator"
+            },
+            "allowedValues": [
+                "2017.23",
+                "2016.30"
+            ]
         }
     },
     "job": {
@@ -42,7 +70,7 @@
                 "tasks": [
                     {
                         "id": "Task01",
-                        "commandLine": "/bin/bash -c 'source /opt/intel/impi/5.1.3.223/bin64/mpivars.sh && export I_MPI_FABRICS=shm:dapl && export I_MPI_DAPL_PROVIDER=ofa-v2-ib0 && export I_MPI_DYNAMIC_CONNECTION=0 && mpirun -n 2 -ppn 1 -hosts $AZ_BATCH_HOST_LIST IMB-MPI1 pingpong'",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [paramters('applicationVersion')] [parameters('dedicatedVmCount')]'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "pool",
@@ -51,7 +79,7 @@
                         },
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                            "coordinationCommandLine": "/bin/bash -c 'ls -la'",
+                            "coordinationCommandLine": "/bin/bash -c 'set -e; set -o pipefail; wait'",
                             "commonResourceFiles": [
                                 {
                                     "source": {
