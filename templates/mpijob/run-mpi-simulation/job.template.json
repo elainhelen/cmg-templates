@@ -51,12 +51,13 @@
                         },
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                            "coordinationCommandLine": "/bin/bash -c 'find $AZ_BATCH_TASK_SHARED_DIR -type f -not -path $AZ_BATCH_TASK_WORKING_DIR/* -not -path $AZ_BATCH_TASK_SHARED_DIR/certs/* \\( ! -iname 'std*.txt' \\) -exec mv {} $AZ_BATCH_TASK_WORKING_DIR \\;'",
+                            "coordinationCommandLine": "echo {fileName}",
                             "commonResourceFiles": [
                                 {
                                     "source": {
                                         "fileGroup": "[parameters('inputFileGroup')]"
-                                    }
+                                    },
+                                    "filePath": "{fileName}"
                                 }
                             ]
                         }
