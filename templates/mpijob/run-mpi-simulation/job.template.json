@@ -89,7 +89,7 @@
                 "tasks": [
                     {
                         "id": "Task01",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [parameters('applicationVersion')] [parameters('dedicatedVmCount')]'",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [parameters('applicationVersion')] [parameters('dedicatedVmCount')] [parameters('additionalSwitches')]'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "pool",
@@ -144,6 +144,12 @@
                                 "uploadOptions": {
                                     "uploadCondition": "taskCompletion"
                                 }
+                            }
+                        ],
+                        "applicationPackageReferences": [
+                            {
+                                "applicationId": "[parameters('applicationId')]",
+                                "version": "[parameters('applicationVersion')]"
                             }
                         ]
                     }
