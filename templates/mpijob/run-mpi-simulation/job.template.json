@@ -144,6 +144,15 @@
                                 "uploadOptions": {
                                     "uploadCondition": "taskCompletion"
                                 }
+                            },
+                            {
+                                "filePattern": "./*.out",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputs')]",
+                                        "path": "[parameters('jobName')]"
+                                    }
+                                }
                             }
                         ],
                         "applicationPackageReferences": [
