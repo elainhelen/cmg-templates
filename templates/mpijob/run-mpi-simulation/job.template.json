@@ -152,6 +152,9 @@
                                         "fileGroup": "[parameters('outputs')]",
                                         "path": "[parameters('jobName')]"
                                     }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
                                 }
                             }
                         ],
