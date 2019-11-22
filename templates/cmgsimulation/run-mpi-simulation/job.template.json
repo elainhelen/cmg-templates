@@ -48,8 +48,8 @@
                 "description": "The name of CMG simulator"
             },
             "allowedValues": [
-                "STARS",
-                "GEM"
+                "STARS_MPI",
+                "GEM_MPI"
             ]
         },
         "applicationVersion": {

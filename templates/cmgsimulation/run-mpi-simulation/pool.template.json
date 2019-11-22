@@ -63,11 +63,11 @@
             },
             "applicationPackageReferences": [
                 {
-                    "applicationId": "STARS",
+                    "applicationId": "STARS_MPI",
                     "version": "2017.23"
                 },
                 {
-                    "applicationId": "GEM",
+                    "applicationId": "GEM_MPI",
                     "version": "2016.30"
                 }
             ],
