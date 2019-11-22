@@ -1,7 +1,7 @@
 [
     {
-        "id": "mpijob",
-        "name": "CMG MPI Job",
-        "description": "CMG MPI Job helps you run simulations with high performance computing with message passing interface (MPI)."
+        "id": "cmgsimulation",
+        "name": "CMG Simulation",
+        "description": "CMG Simulation helps you run SPE/MPI simulations."
     }
 ]
