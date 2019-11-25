@@ -1,23 +1,23 @@
 {
     "parameters": {
-        "poolId": {
+        "poolName": {
             "type": "string",
             "defaultValue": "mpiPool",
             "metadata": {
-                "description": "The id of Azure Batch pool"
+                "description": "The Id of Azure Batch pool"
             }
         },
-        "vmSize": {
+        "nodeSize": {
             "type": "string",
-            "defaultValue": "STANDARD_H16r",
+            "defaultValue": "Standard_H16r",
+            "allowedValues": [
+                "Standard_H16r",
+                "Standard_H16mr",
+                "Standard_HC44rs"
+            ],
             "metadata": {
                 "description": "The size of the virtual machines that can run MPI jobs"
-            },
-            "allowedValues": [
-                "STANDARD_H16r",
-                "STANDARD_H16mr",
-                "STANDARD_HC44rs"
-            ]
+            }
         },
         "dedicatedVmCount": {
             "type": "int",
