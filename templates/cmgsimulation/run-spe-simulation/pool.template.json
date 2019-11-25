@@ -18,7 +18,7 @@
                 "Standard_F72s_v2"
             ],
             "metadata": {
-                "description": "The size of the virtual machines that run the application"
+                "description": "The size of the virtual machines that run SPE jobs"
             }
         },
         "dedicatedVmCount": {
@@ -38,6 +38,32 @@
                 "version": "latest"
             },
             "nodeAgentSKUId": "batch.node.ubuntu 18.04"
+        }
+    },
+    "pool": {
+        "type": "Microsoft.Batch/batchAccounts/pools",
+        "properties": {
+            "id": "[parameters('poolName')]",
+            "displayName": "Linux pool [parameters('poolName')] for CMG job",
+            "virtualMachineConfiguration": "[variables('osType')]",
+            "vmSize": "[parameters('nodeSize')]",
+            "targetDedicatedNodes": "[parameters('dedicatedVmCount')]",
+            "enableAutoScale": false,
+            "enableInterNodeCommunication": false,
+            "maxTasksPerNode": 1,
+            "taskSchedulingPolicy": {
+                "nodeFillType": "Pack"
+            },
+            "applicationPackageReferences": [
+                {
+                    "applicationId": "CMGCLOUD",
+                    "version": "2019.1"
+                }
+            ],
+            "networkConfiguration": {
+                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/hpcTest/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes",
+                "dynamicVNetAssignmentScope": "none"
+            }
         }
     }
 }
