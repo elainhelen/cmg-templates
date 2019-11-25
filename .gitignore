@@ -4,5 +4,8 @@
 # Examples
 examples/
 
-# Storages
-storages/
+# datafile
+datafile/
+
+# cmgcloud scripts
+cmgcloud/
