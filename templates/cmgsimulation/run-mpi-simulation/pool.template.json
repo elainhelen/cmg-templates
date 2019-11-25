@@ -16,34 +16,35 @@
                 "Standard_HC44rs"
             ],
             "metadata": {
-                "description": "The size of the virtual machines that can run MPI jobs"
+                "description": "The size of the virtual machines that run MPI jobs"
             }
         },
         "dedicatedVmCount": {
             "type": "int",
             "defaultValue": 2,
             "metadata": {
-                "description": "The number of the dedicated VM nodes"
+                "description": "The number of dedicated nodes in the Azure Batch pool"
             }
         }
     },
     "variables": {
         "osType": {
-            "publisher": "OpenLogic",
-            "offer": "CentOS-HPC",
-            "sku": "7.4",
-            "version": "latest"
+            "imageReference": {
+                "publisher": "OpenLogic",
+                "offer": "CentOS-HPC",
+                "sku": "7.4",
+                "version": "latest"
+            },
+            "nodeAgentSKUId": "batch.node.centos 7"
         }
     },
     "pool": {
         "type": "Microsoft.Batch/batchAccounts/pools",
         "properties": {
-            "id": "[parameters('poolId')]",
-            "virtualMachineConfiguration": {
-                "imageReference": "[variables('osType')]",
-                "nodeAgentSKUId": "batch.node.centos 7"
-            },
-            "vmSize": "[parameters('vmSize')]",
+            "id": "[parameters('poolName')]",
+            "displayName": "Linux pool [parameters('poolName')] for CMG MPI job",
+            "virtualMachineConfiguration": "[variables('osType')]",
+            "vmSize": "[parameters('nodeSize')]",
             "targetDedicatedNodes": "[parameters('dedicatedVmCount')]",
             "enableAutoScale": false,
             "enableInterNodeCommunication": true,
@@ -60,7 +61,7 @@
                 "waitForSuccess": true
             },
             "taskSchedulingPolicy": {
-                "nodeFillType": "Spread"
+                "nodeFillType": "Pack"
             },
             "applicationPackageReferences": [
                 {
