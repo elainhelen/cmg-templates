@@ -1,7 +1,7 @@
 [
     {
         "id": "cmgsimulation",
-        "name": "CMG Simulation",
-        "description": "CMG Simulation helps you run SPE/MPI simulations."
+        "name": "CMG Cloud Simulation",
+        "description": "CMG Cloud Simulation helps you run SPE/MPI simulations in Azure Batch."
     }
 ]

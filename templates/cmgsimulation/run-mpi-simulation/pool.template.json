@@ -15,7 +15,8 @@
             },
             "allowedValues": [
                 "STANDARD_H16r",
-                "Standard_H16mr"
+                "STANDARD_H16mr",
+                "STANDARD_HC44rs"
             ]
         },
         "dedicatedVmCount": {
@@ -63,12 +64,8 @@
             },
             "applicationPackageReferences": [
                 {
-                    "applicationId": "STARS_MPI",
-                    "version": "2017.23"
-                },
-                {
-                    "applicationId": "GEM_MPI",
-                    "version": "2016.30"
+                    "applicationId": "CMGCLOUD_MPI",
+                    "version": "2019.1"
                 }
             ],
             "networkConfiguration": {

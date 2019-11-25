@@ -1,12 +1,12 @@
 [
     {
-        "id": "run-mpi-simulation",
-        "name": "Run MPI Simulation",
-        "description": "This job will deploy a pool with MPI/RDMA enabled virtual machines and run simulations with MPI command."
-    },
-    {
         "id": "run-spe-simulation",
         "name": "Run SPE Simulation",
         "description": "This job will deploy a pool and run a conventional simulation with a single *.dat file."
+    },
+    {
+        "id": "run-mpi-simulation",
+        "name": "Run MPI Simulation",
+        "description": "This job will deploy a pool with MPI/RDMA enabled virtual machines and run a simulation with MPI command."
     }
 ]

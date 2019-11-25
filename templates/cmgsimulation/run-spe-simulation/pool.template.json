@@ -1,0 +1,43 @@
+{
+    "parameters": {
+        "poolName": {
+            "type": "string",
+            "defaultValue": "cmgPool",
+            "metadata": {
+                "description": "The Id of Azure Batch pool"
+            }
+        },
+        "dedicatedVmCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "The number of dedicated nodes in the Azure Batch pool"
+            }
+        },
+        "nodeSize": {
+            "type": "string",
+            "defaultValue": "Standard_F32s_v2",
+            "allowedValues": [
+                "Standard_F16s_v2",
+                "Standard_F32s_v2",
+                "Standard_F48s_v2",
+                "Standard_F64s_v2",
+                "Standard_F72s_v2"
+            ],
+            "metadata": {
+                "description": "The size of the virtual machines that run the application"
+            }
+        }
+    },
+    "variables": {
+        "osType": {
+            "imageReference": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            },
+            "nodeAgentSKUId": "batch.node.ubuntu 18.04"
+        }
+    }
+}

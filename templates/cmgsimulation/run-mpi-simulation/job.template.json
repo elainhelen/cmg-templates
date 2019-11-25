@@ -43,7 +43,7 @@
         },
         "applicationId": {
             "type": "string",
-            "defaultValue": "STARS",
+            "defaultValue": "STARS_MPI",
             "metadata": {
                 "description": "The name of CMG simulator"
             },
