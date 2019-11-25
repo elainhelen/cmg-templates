@@ -7,13 +7,6 @@
                 "description": "The Id of Azure Batch pool"
             }
         },
-        "dedicatedVmCount": {
-            "type": "int",
-            "defaultValue": 1,
-            "metadata": {
-                "description": "The number of dedicated nodes in the Azure Batch pool"
-            }
-        },
         "nodeSize": {
             "type": "string",
             "defaultValue": "Standard_F32s_v2",
@@ -26,6 +19,13 @@
             ],
             "metadata": {
                 "description": "The size of the virtual machines that run the application"
+            }
+        },
+        "dedicatedVmCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "The number of dedicated nodes in the Azure Batch pool"
             }
         }
     },
