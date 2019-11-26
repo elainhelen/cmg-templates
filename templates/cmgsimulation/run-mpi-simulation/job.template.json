@@ -1,24 +1,55 @@
 {
+    "templateMetadata": {
+        "description": "Application template for working with CMG MPI Cloud"
+    },
     "parameters": {
         "poolId": {
             "type": "string",
             "metadata": {
-                "description": "The id of the pool on which to run the job"
-            }
-        },
-        "jobName": {
-            "type": "string",
-            "defaultValue": "mpiJob",
-            "metadata": {
-                "description": "The name of the job",
-                "advancedType": "job-id"
+                "description": "The Id of the pool on which to run the job"
             }
         },
         "dedicatedVmCount": {
             "type": "int",
             "defaultValue": 2,
             "metadata": {
-                "description": "The number of VM nodes, it must be the same as the number of nodes in the pool"
+                "description": "The number of virtual machines to execute the multi-instance task (same as the number of nodes)"
+            }
+        },
+        "cmgApplicationPackage": {
+            "type": "string",
+            "defaultValue": "STARS_MPI",
+            "allowedValues": [
+                "STARS_MPI",
+                "GEM_MPI"
+            ],
+            "metadata": {
+                "description": "The choose of CMG MPI simulator to run jobs"
+            }
+        },
+        "cmgApplicationPackageVersion": {
+            "type": "string",
+            "defaultValue": "2017.23",
+            "allowedValues": [
+                "2017.23",
+                "2016.30"
+            ],
+            "metadata": {
+                "description": "The version of the CMG MPI simulator"
+            }
+        },
+        "userName": {
+            "type": "string",
+            "defaultValue": "cmguser",
+            "metadata": {
+                "description": "The owner name of the Azure Batch job, also used to prefix simulation outputs"
+            }
+        },
+        "taskName": {
+            "type": "string",
+            "defaultValue": "testTask",
+            "metadata": {
+                "description": "The name of the task"
             }
         },
         "inputFileGroup": {
@@ -28,54 +59,35 @@
                 "advancedType": "file-group"
             }
         },
-        "fileName": {
+        "datFileName": {
             "type": "string",
             "metadata": {
-                "description": "The data file name needs to be run"
+                "description": "The CMG dat file to be run",
+                "advancedType": "file-in-file-group",
+                "dependsOn": "inputFileGroup",
+                "wildcards": "*.dat"
             }
         },
-        "outputs": {
+        "simulatorSwitches": {
+            "type": "string",
+            "defaultValue": "-log -sr3",
+            "metadata": {
+                "description": "Any additional arguments to pass to CMG simulators, e.g., -log -sr3"
+            }
+        },
+        "outputFileGroup": {
             "type": "string",
             "metadata": {
                 "description": "The file group where outputs will be stored",
                 "advancedType": "file-group"
-            }
-        },
-        "applicationId": {
-            "type": "string",
-            "defaultValue": "STARS_MPI",
-            "metadata": {
-                "description": "The name of CMG simulator"
-            },
-            "allowedValues": [
-                "STARS_MPI",
-                "GEM_MPI"
-            ]
-        },
-        "applicationVersion": {
-            "type": "string",
-            "defaultValue": "2017.23",
-            "metadata": {
-                "description": "The version number of CMG simulator"
-            },
-            "allowedValues": [
-                "2017.23",
-                "2016.30"
-            ]
-        },
-        "additionalSwitches": {
-            "type": "string",
-            "defaultValue": "-log -sr3",
-            "metadata": {
-                "description": "The additional switches of CMG simulation"
             }
         }
     },
     "job": {
         "type": "Microsoft.Batch/batchAccounts/jobs",
         "properties": {
-            "id": "[parameters('jobName')]",
-            "displayName": "[parameters('jobName')]",
+            "id": "Job-[parameters('userName')]",
+            "displayName": "Job-[parameters('userName')]",
             "onAllTasksComplete": "terminateJob",
             "constraints": {
                 "maxWallClockTime": "PT5H",
@@ -88,14 +100,39 @@
                 "type": "taskCollection",
                 "tasks": [
                     {
-                        "id": "Task01",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_TASK_WORKING_DIR/runmpisimulation.py [parameters('fileName')] [parameters('applicationId')] [parameters('applicationVersion')] [parameters('dedicatedVmCount')] [parameters('additionalSwitches')]'",
+                        "id": "[parameters('userName')]-[parameters('taskName')]",
+                        "displayName": "[parameters('taskName')]",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] [parameters('datFileName')] [parameters('dedicatedVmCount')] [parameters('simulatorSwitches')]'",
                         "userIdentity": {
                             "autoUser": {
-                                "scope": "pool",
-                                "elevationLevel": "nonadmin"
+                                "scope": "task",
+                                "elevationLevel": "nonAdmin"
                             }
                         },
+                        "environmentSettings": [
+                            {
+                                "name": "CMG_LIC_HOST",
+                                "value": "10.1.1.4"
+                            },
+                            {
+                                "name": "KMP_AFFINITY",
+                                "value": "compact,2"
+                            },
+                            {
+                                "name": "OMP_SCHEDULE",
+                                "value": "static,1"
+                            },
+                            {
+                                "name": "SR3_LEGACY_LOCKING",
+                                "value": "1"
+                            }
+                        ],
+                        "applicationPackageReferences": [
+                            {
+                                "applicationId": "[parameters('cmgApplicationPackage')]",
+                                "version": "[parameters('cmgApplicationPackageVersion')]"
+                            }
+                        ],
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
                             "coordinationCommandLine": "/bin/bash -c 'set -e; set -o pipefail; wait'",
@@ -110,11 +147,11 @@
                         },
                         "outputFiles": [
                             {
-                                "filePattern": "../std*.txt",
+                                "filePattern": "../stdout.txt",
                                 "destination": {
                                     "autoStorage": {
-                                        "fileGroup": "[parameters('outputs')]",
-                                        "path": "[parameters('jobName')]"
+                                        "fileGroup": "[parameters('outputFileGroup')]",
+                                        "path": "[parameters('userName')]/logs/[parameters('taskName')]-stdout.txt"
                                     }
                                 },
                                 "uploadOptions": {
@@ -122,11 +159,11 @@
                                 }
                             },
                             {
-                                "filePattern": "./*.sr3",
+                                "filePattern": "../stderr.txt",
                                 "destination": {
                                     "autoStorage": {
-                                        "fileGroup": "[parameters('outputs')]",
-                                        "path": "[parameters('jobName')]"
+                                        "fileGroup": "[parameters('outputFileGroup')]",
+                                        "path": "[parameters('userName')]/logs/[parameters('taskName')]-stderr.txt"
                                     }
                                 },
                                 "uploadOptions": {
@@ -134,34 +171,16 @@
                                 }
                             },
                             {
-                                "filePattern": "./*.log",
+                                "filePattern": "*",
                                 "destination": {
                                     "autoStorage": {
-                                        "fileGroup": "[parameters('outputs')]",
-                                        "path": "[parameters('jobName')]"
+                                        "fileGroup": "[parameters('outputFileGroup')]",
+                                        "path": "[parameters('userName')]/[parameters('taskName')]"
                                     }
                                 },
                                 "uploadOptions": {
-                                    "uploadCondition": "taskCompletion"
+                                    "uploadCondition": "taskSuccess"
                                 }
-                            },
-                            {
-                                "filePattern": "./*.out",
-                                "destination": {
-                                    "autoStorage": {
-                                        "fileGroup": "[parameters('outputs')]",
-                                        "path": "[parameters('jobName')]"
-                                    }
-                                },
-                                "uploadOptions": {
-                                    "uploadCondition": "taskCompletion"
-                                }
-                            }
-                        ],
-                        "applicationPackageReferences": [
-                            {
-                                "applicationId": "[parameters('applicationId')]",
-                                "version": "[parameters('applicationVersion')]"
                             }
                         ]
                     }
