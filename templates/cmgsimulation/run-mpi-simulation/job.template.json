@@ -102,7 +102,7 @@
                     {
                         "id": "[parameters('userName')]-[parameters('taskName')]",
                         "displayName": "[parameters('taskName')]",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_2/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] [parameters('datFileName')] [parameters('dedicatedVmCount')] [parameters('simulatorSwitches')]'",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_3/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] [parameters('datFileName')] [parameters('dedicatedVmCount')] [parameters('simulatorSwitches')]'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "task",
@@ -134,7 +134,7 @@
                             },
                             {
                                 "applicationId": "CMGCLOUD_MPI",
-                                "version": "2019.2"
+                                "version": "2019.3"
                             }
                         ],
                         "multiInstanceSettings": {
