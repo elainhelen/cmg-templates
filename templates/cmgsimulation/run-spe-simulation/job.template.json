@@ -1,0 +1,182 @@
+{
+    "templateMetadata": {
+        "description": "Application template for working with CMG Cloud"
+    },
+    "parameters": {
+        "poolId": {
+            "type": "string",
+            "metadata": {
+                "description": "The Id of the pool on which to run the job"
+            }
+        },
+        "cmgApplicationPackage": {
+            "type": "string",
+            "defaultValue": "STARS",
+            "allowedValues": [
+                "IMEX",
+                "GEM",
+                "STARS"
+            ],
+            "metadata": {
+                "description": "The choose of CMG simulator to run jobs"
+            }
+        },
+        "cmgApplicationPackageVersion": {
+            "type": "string",
+            "defaultValue": "2019.10",
+            "allowedValues": [
+                "2016.10",
+                "2017.10",
+                "2018.10",
+                "2019.10"
+            ],
+            "metadata": {
+                "description": "The version of the CMG simulator"
+            }
+        },
+        "userName": {
+            "type": "string",
+            "defaultValue": "cmguser",
+            "metadata": {
+                "description": "The owner name of the Azure Batch job, also used to prefix simulation outputs"
+            }
+        },
+        "taskName": {
+            "type": "string",
+            "defaultValue": "testTask",
+            "metadata": {
+                "description": "The name of the task"
+            }
+        },
+        "inputFileGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The file group where the input files are stored",
+                "advancedType": "file-group"
+            }
+        },
+        "datFileName": {
+            "type": "string",
+            "metadata": {
+                "description": "The CMG dat file to be run",
+                "advancedType": "file-in-file-group",
+                "dependsOn": "inputFileGroup",
+                "wildcards": "*.dat"
+            }
+        },
+        "simulatorSwitches": {
+            "type": "string",
+            "defaultValue": "-log -sr3",
+            "metadata": {
+                "description": "Any additional arguments to pass to CMG simulators, e.g., -log -sr3"
+            }
+        },
+        "outputFileGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The file group where outputs will be stored",
+                "advancedType": "file-group"
+            }
+        }
+    },
+    "job": {
+        "type": "Microsoft.Batch/batchAccounts/jobs",
+        "properties": {
+            "id": "Job-[parameters('userName')]",
+            "displayName": "Job-[parameters('userName')]",
+            "onAllTasksComplete": "terminateJob",
+            "constraints": {
+                "maxWallClockTime": "PT5H",
+                "maxTaskRetryCount": 0
+            },
+            "poolInfo": {
+                "poolId": "[parameters('poolId')]"
+            },
+            "taskFactory": {
+                "type": "taskCollection",
+                "tasks": [
+                    {
+                        "id": "[parameters('userName')]-[parameters('taskName')]",
+                        "displayName": "[parameters('taskName')]",
+                        "commandLine": "/bin/bash -c 'python3 $AZ_BATCH_APP_PACKAGE_cmgcloud_2019_1/cmgcloud/run_spe_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] [parameters('datFileName')] [parameters('simulatorSwitches')]'",
+                        "userIdentity": {
+                            "autoUser": {
+                                "scope": "task",
+                                "elevationLevel": "nonAdmin"
+                            }
+                        },
+                        "environmentSettings": [
+                            {
+                                "name": "CMG_LIC_HOST",
+                                "value": "10.1.1.4"
+                            },
+                            {
+                                "name": "KMP_AFFINITY",
+                                "value": "compact,2"
+                            },
+                            {
+                                "name": "OMP_SCHEDULE",
+                                "value": "static,1"
+                            },
+                            {
+                                "name": "SR3_LEGACY_LOCKING",
+                                "value": "1"
+                            }
+                        ],
+                        "applicationPackageReferences": [
+                            {
+                                "applicationId": "[parameters('cmgApplicationPackage')]",
+                                "version": "[parameters('cmgApplicationPackageVersion')]"
+                            }
+                        ],
+                        "resourceFiles": [
+                            {
+                                "source": {
+                                    "fileGroup": "[parameters('inputFileGroup')]"
+                                }
+                            }
+                        ],
+                        "outputFiles": [
+                            {
+                                "filePattern": "../stdout.txt",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputFileGroup')]",
+                                        "path": "[parameters('userName')]/logs/[parameters('taskName')]-stdout.txt"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            },
+                            {
+                                "filePattern": "../stderr.txt",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputFileGroup')]",
+                                        "path": "[parameters('userName')]/logs/[parameters('taskName')]-stderr.txt"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskCompletion"
+                                }
+                            },
+                            {
+                                "filePattern": "*",
+                                "destination": {
+                                    "autoStorage": {
+                                        "fileGroup": "[parameters('outputFileGroup')]",
+                                        "path": "[parameters('userName')]/[parameters('taskName')]"
+                                    }
+                                },
+                                "uploadOptions": {
+                                    "uploadCondition": "taskSuccess"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
