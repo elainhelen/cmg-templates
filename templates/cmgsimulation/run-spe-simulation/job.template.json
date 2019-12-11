@@ -66,9 +66,9 @@
         },
         "simulatorSwitches": {
             "type": "string",
-            "defaultValue": "-log -sr3",
+            "defaultValue": "-sr3",
             "metadata": {
-                "description": "Any additional arguments to pass to CMG simulators, e.g., -log -sr3"
+                "description": "Any additional arguments to pass to CMG simulators, e.g., -sr3"
             }
         },
         "outputFileGroup": {
@@ -86,7 +86,7 @@
             "displayName": "Job-[parameters('userName')]",
             "onAllTasksComplete": "terminateJob",
             "constraints": {
-                "maxWallClockTime": "PT5H",
+                "maxWallClockTime": "PT24H",
                 "maxTaskRetryCount": 0
             },
             "poolInfo": {
@@ -98,7 +98,7 @@
                     {
                         "id": "[parameters('userName')]-[parameters('taskName')]",
                         "displayName": "[parameters('taskName')]",
-                        "commandLine": "/bin/bash -c 'python3 $AZ_BATCH_APP_PACKAGE_cmgcloud_2019_1/cmgcloud/run_spe_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] [parameters('datFileName')] [parameters('simulatorSwitches')]'",
+                        "commandLine": "/bin/bash -c 'python3 $AZ_BATCH_APP_PACKAGE_cmgcloud_2019_1/cmgcloud/run_spe_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] \"[parameters('datFileName')]\" \"[parameters('simulatorSwitches')]\" False'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "task",
