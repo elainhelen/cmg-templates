@@ -36,7 +36,14 @@
                 "version": "latest"
             },
             "nodeAgentSKUId": "batch.node.centos 7"
-        }
+        },
+        "py1": "sudo yum install -y gcc openssl-devel bzip2-devel libffi-devel",
+        "py2": "cd /usr/src && sudo wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz",
+        "py3": "sudo tar xzf Python-3.7.4.tgz && cd Python-3.7.4 && sudo ./configure --enable-optimizations",
+        "py4": "sudo make altinstall && sudo rm /usr/src/Python-3.7.4.tgz && python3.7 -V",
+        "mkl1": "sudo yum-config-manager --add-repo https://yum.repos.intel.com/mkl/setup/intel-mkl.repo",
+        "mkl2": "sudo rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB",
+        "mkl3": "sudo yum install -y intel-mkl-2018.2-046"
     },
     "pool": {
         "type": "Microsoft.Batch/batchAccounts/pools",
@@ -50,7 +57,7 @@
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
             "startTask": {
-                "commandLine": "/bin/bash -c \"sudo yum install -y gcc openssl-devel bzip2-devel libffi-devel && cd /usr/src && sudo wget https://www.python.org/ftp/python/3.7.4/Python-3.7.4.tgz && sudo tar xzf Python-3.7.4.tgz && cd Python-3.7.4 && sudo ./configure --enable-optimizations && sudo make altinstall && sudo rm /usr/src/Python-3.7.4.tgz && python3.7 -V && sudo yum-config-manager --add-repo https://yum.repos.intel.com/mkl/setup/intel-mkl.repo && sudo rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB && sudo yum install -y intel-mkl-2018.2-046\"",
+                "commandLine": "/bin/bash -c \"[variables('py1')] && [variables('py2')] && [variables('py3')] && [variables('py4')] && [variables('mkl1')] && [variables('mkl2')] && [variables('mkl3')]\"",
                 "userIdentity": {
                     "autoUser": {
                         "scope": "pool",
