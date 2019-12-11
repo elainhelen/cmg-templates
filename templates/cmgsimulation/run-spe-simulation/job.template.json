@@ -127,6 +127,10 @@
                             {
                                 "applicationId": "[parameters('cmgApplicationPackage')]",
                                 "version": "[parameters('cmgApplicationPackageVersion')]"
+                            },
+                            {
+                                "applicationId": "CMGCLOUD",
+                                "version": "2019.1"
                             }
                         ],
                         "resourceFiles": [
