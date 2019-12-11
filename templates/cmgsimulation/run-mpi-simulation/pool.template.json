@@ -43,7 +43,8 @@
         "py4": "sudo make altinstall && sudo rm /usr/src/Python-3.7.4.tgz && python3.7 -V",
         "mkl1": "sudo yum-config-manager --add-repo https://yum.repos.intel.com/mkl/setup/intel-mkl.repo",
         "mkl2": "sudo rpm --import https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB",
-        "mkl3": "sudo yum install -y intel-mkl-2018.2-046"
+        "mkl3": "sudo yum install -y intel-mkl-2018.2-046",
+        "py": "[variables('py1')] && [variables('py2')] && [variables('py3')] && [variables('py4')]"
     },
     "pool": {
         "type": "Microsoft.Batch/batchAccounts/pools",
@@ -57,7 +58,7 @@
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
             "startTask": {
-                "commandLine": "/bin/bash -c \"[variables('py1')] && [variables('py2')] && [variables('py3')] && [variables('py4')] && [variables('mkl1')] && [variables('mkl2')] && [variables('mkl3')]\"",
+                "commandLine": "/bin/bash -c \"[variables('py')] && [variables('mkl1')] && [variables('mkl2')] && [variables('mkl3')]\"",
                 "userIdentity": {
                     "autoUser": {
                         "scope": "pool",
