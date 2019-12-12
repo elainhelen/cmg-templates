@@ -50,7 +50,7 @@
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
             "startTask": {
-                "commandLine": "/bin/bash -c \"ls -la\"",
+                "commandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/start_task_install.sh\"",
                 "userIdentity": {
                     "autoUser": {
                         "scope": "pool",
