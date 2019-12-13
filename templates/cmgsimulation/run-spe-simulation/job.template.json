@@ -112,7 +112,7 @@
                             },
                             {
                                 "name": "KMP_AFFINITY",
-                                "value": "compact,2"
+                                "value": "compact,1"
                             },
                             {
                                 "name": "OMP_SCHEDULE",
