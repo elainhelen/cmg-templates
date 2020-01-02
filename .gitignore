@@ -1,11 +1,8 @@
 # vscode
 .vscode/
 
-# Examples
-examples/
-
 # datafile
 datafile/
 
 # cmgcloud scripts
-cmgcloud/
+runscript/
