@@ -32,7 +32,7 @@
             "imageReference": {
                 "publisher": "OpenLogic",
                 "offer": "CentOS-HPC",
-                "sku": "7.4",
+                "sku": "7.7",
                 "version": "latest"
             },
             "nodeAgentSKUId": "batch.node.centos 7"
