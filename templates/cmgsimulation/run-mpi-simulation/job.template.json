@@ -145,12 +145,12 @@
                             },
                             {
                                 "applicationId": "CMGCLOUD_MPI",
-                                "version": "2019.1"
+                                "version": "2019.2"
                             }
                         ],
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                            "coordinationCommandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/coordination_cmd.sh [parameters('intelMPIVersion')]\"",
+                            "coordinationCommandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_2/cmgcloud_mpi/coordination_cmd.sh [parameters('intelMPIVersion')]\"",
                             "commonResourceFiles": [
                                 {
                                     "source": {
