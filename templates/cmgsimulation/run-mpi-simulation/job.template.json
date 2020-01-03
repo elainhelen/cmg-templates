@@ -38,6 +38,17 @@
                 "description": "The version of the CMG MPI simulator"
             }
         },
+        "intelMPIVersion": {
+            "type": "string",
+            "defaultValue": "2018.4.274",
+            "allowedValues": [
+                "2018.4.274",
+                "2019.5.281"
+            ],
+            "metadata": {
+                "description": "The version of the Intel runtime libraries"
+            }
+        },
         "userName": {
             "type": "string",
             "defaultValue": "cmguser",
@@ -102,7 +113,7 @@
                     {
                         "id": "[parameters('userName')]-[parameters('taskName')]",
                         "displayName": "[parameters('taskName')]",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] [parameters('datFileName')] [parameters('dedicatedVmCount')] [parameters('simulatorSwitches')]'",
+                        "commandLine": "/bin/bash -c 'ls'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "task",
@@ -139,7 +150,7 @@
                         ],
                         "multiInstanceSettings": {
                             "numberOfInstances": "[parameters('dedicatedVmCount')]",
-                            "coordinationCommandLine": "/bin/bash -c 'set -e; set -o pipefail; wait'",
+                            "coordinationCommandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/coordination_cmd.sh [parameters('intelMPIVersion')]\"",
                             "commonResourceFiles": [
                                 {
                                     "source": {
