@@ -111,10 +111,6 @@
                         },
                         "environmentSettings": [
                             {
-                                "name": "CMG_LIC_HOST",
-                                "value": "10.1.1.4"
-                            },
-                            {
                                 "name": "KMP_AFFINITY",
                                 "value": "compact,2"
                             },
