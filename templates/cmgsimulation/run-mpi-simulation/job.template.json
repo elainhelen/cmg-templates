@@ -111,6 +111,10 @@
                         },
                         "environmentSettings": [
                             {
+                                "name": "CMG_LIC_HOST",
+                                "value": "10.1.1.4"
+                            },
+                            {
                                 "name": "KMP_AFFINITY",
                                 "value": "compact,2"
                             },
@@ -121,6 +125,22 @@
                             {
                                 "name": "SR3_LEGACY_LOCKING",
                                 "value": "1"
+                            },
+                            {
+                                "name": "OMP_PROC_BIND",
+                                "value": "TRUE"
+                            },
+                            {
+                                "name": "I_MPI_FABRICS",
+                                "value": "shm:dapl"
+                            },
+                            {
+                                "name": "I_MPI_DAPL_PROVIDER",
+                                "value": "ofa-v2-ib0"
+                            },
+                            {
+                                "name": "I_MPI_DYNAMIC_CONNECTION",
+                                "value": "0"
                             }
                         ],
                         "applicationPackageReferences": [
