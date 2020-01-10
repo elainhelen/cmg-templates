@@ -116,11 +116,11 @@
                             },
                             {
                                 "name": "KMP_AFFINITY",
-                                "value": "verbose"
+                                "value": "compact,1"
                             },
                             {
                                 "name": "OMP_SCHEDULE",
-                                "value": "dynamic"
+                                "value": "static,1"
                             },
                             {
                                 "name": "SR3_LEGACY_LOCKING",
