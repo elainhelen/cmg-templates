@@ -127,10 +127,6 @@
                                 "value": "1"
                             },
                             {
-                                "name": "OMP_PROC_BIND",
-                                "value": "TRUE"
-                            },
-                            {
                                 "name": "I_MPI_FABRICS",
                                 "value": "shm:dapl"
                             },
