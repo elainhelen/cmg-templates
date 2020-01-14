@@ -83,7 +83,7 @@
                 }
             ],
             "networkConfiguration": {
-                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/cmgdev/providers/Microsoft.Network/virtualNetworks/cmgdev/subnets/subnet_computernodes",
+                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/cmgdev/providers/Microsoft.Network/virtualNetworks/cmgdev-mpi/subnets/subnet_mpinodes",
                 "dynamicVNetAssignmentScope": "none"
             }
         }
