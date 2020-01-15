@@ -28,10 +28,10 @@
         },
         "intelMpiVersion": {
             "type": "string",
-            "defaultValue": "2019.6-166",
+            "defaultValue": "2019.6-088",
             "allowedValues": [
-                "2019.5-281",
-                "2019.6-166"
+                "2019.5-075",
+                "2019.6-088"
             ],
             "metadata": {
                 "description": "The version of the Intel MPI library"
@@ -39,10 +39,10 @@
         },
         "intelMklVersion": {
             "type": "string",
-            "defaultValue": "2020.0-166",
+            "defaultValue": "2020.0-088",
             "allowedValues": [
-                "2019.5-281",
-                "2020.0-166"
+                "2019.5-075",
+                "2020.0-088"
             ],
             "metadata": {
                 "description": "The version of the Intel MKL library"
