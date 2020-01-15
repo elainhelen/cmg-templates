@@ -29,14 +29,43 @@
         },
         "cmgApplicationPackageVersion": {
             "type": "string",
-            "defaultValue": "2017.23",
+            "defaultValue": "beta",
             "allowedValues": [
+                "beta",
+                "2016.30",
                 "2017.23",
-                "2019.23",
-                "2016.30"
+                "2019.23"
             ],
             "metadata": {
                 "description": "The version of the CMG MPI simulator"
+            }
+        },
+        "mpiRunScriptVersion": {
+            "type": "string",
+            "defaultValue": "2020_1",
+            "metadata": {
+                "description": "The version of the run script application"
+            }
+        },
+        "ompSchedule": {
+            "type": "string",
+            "defaultValue": "dynamic",
+            "metadata": {
+                "description": "Environment variable OMP_SCHEDULE"
+            }
+        },
+        "ompProcBind": {
+            "type": "string",
+            "defaultValue": "TRUE",
+            "metadata": {
+                "description": "Environment variable OMP_PROC_BIND"
+            }
+        },
+        "kmpAffinity": {
+            "type": "string",
+            "defaultValue": "verbose",
+            "metadata": {
+                "description": "Environment variable KMP_AFFINITY"
             }
         },
         "userName": {
@@ -103,7 +132,7 @@
                     {
                         "id": "[parameters('userName')]-[parameters('taskName')]",
                         "displayName": "[parameters('taskName')]",
-                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] \"[parameters('datFileName')]\" [parameters('dedicatedVmCount')] \"[parameters('simulatorSwitches')]\"'",
+                        "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_[parameters('mpiRunScriptVersion')]/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] \"[parameters('datFileName')]\" [parameters('dedicatedVmCount')] \"[parameters('simulatorSwitches')]\"'",
                         "userIdentity": {
                             "autoUser": {
                                 "scope": "pool",
@@ -116,12 +145,16 @@
                                 "value": "10.1.1.4"
                             },
                             {
-                                "name": "KMP_AFFINITY",
-                                "value": "compact,1"
+                                "name": "OMP_SCHEDULE",
+                                "value": "[parameters('ompSchedule')]"
                             },
                             {
-                                "name": "OMP_SCHEDULE",
-                                "value": "static,1"
+                                "name": "OMP_PROC_BIND",
+                                "value": "[parameters('ompProcBind')]"
+                            },
+                            {
+                                "name": "KMP_AFFINITY",
+                                "value": "[parameters('kmpAffinity')]"
                             },
                             {
                                 "name": "SR3_LEGACY_LOCKING",
@@ -147,7 +180,7 @@
                             },
                             {
                                 "applicationId": "CMGCLOUD_MPI",
-                                "version": "2019.1"
+                                "version": "[parameters('mpiRunScriptVersion')]"
                             }
                         ],
                         "multiInstanceSettings": {
