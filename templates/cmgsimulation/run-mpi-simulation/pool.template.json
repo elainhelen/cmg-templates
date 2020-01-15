@@ -28,15 +28,26 @@
         },
         "intelMpiVersion": {
             "type": "string",
-            "defaultValue": "2018.4-274",
+            "defaultValue": "2019.6-088",
             "allowedValues": [
-                "2016.3-210",
-                "2017.8-262",
-                "2018.4-274",
-                "2019.5-281"
+                "2018.4-057",
+                "2019.5-075",
+                "2019.6-088"
             ],
             "metadata": {
-                "description": "The version of the Intel runtime libraries"
+                "description": "The version of the Intel MPI library"
+            }
+        },
+        "intelMklVersion": {
+            "type": "string",
+            "defaultValue": "2019.5-075",
+            "allowedValues": [
+                "2018.4-057",
+                "2019.5-075",
+                "2020.0-088"
+            ],
+            "metadata": {
+                "description": "The version of the Intel MKL library"
             }
         }
     },
@@ -63,7 +74,7 @@
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
             "startTask": {
-                "commandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_2019_1/cmgcloud_mpi/start_task_install.sh [parameters('intelMpiVersion')]\"",
+                "commandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_mpi_start_task_2019_1/mpi_start_task/start_task_install.sh [parameters('intelMpiVersion')] [parameters('intelMklVersion')]\"",
                 "userIdentity": {
                     "autoUser": {
                         "scope": "pool",
@@ -78,12 +89,12 @@
             },
             "applicationPackageReferences": [
                 {
-                    "applicationId": "CMGCLOUD_MPI",
+                    "applicationId": "MPI_START_TASK",
                     "version": "2019.1"
                 }
             ],
             "networkConfiguration": {
-                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/cmgdev/providers/Microsoft.Network/virtualNetworks/cmgdev-mpi/subnets/subnet_mpinodes",
+                "subnetId": "/subscriptions/9fb1faf4-2a05-47ad-8bf6-281265edd4bd/resourceGroups/hpcTest/providers/Microsoft.Network/virtualNetworks/hpcTestVnet/subnets/subnet_hpcnodes",
                 "dynamicVNetAssignmentScope": "none"
             }
         }
