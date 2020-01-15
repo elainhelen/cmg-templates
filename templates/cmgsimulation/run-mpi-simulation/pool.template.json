@@ -28,11 +28,10 @@
         },
         "intelMpiVersion": {
             "type": "string",
-            "defaultValue": "2019.6-088",
+            "defaultValue": "2019.6-166",
             "allowedValues": [
-                "2018.4-057",
-                "2019.5-075",
-                "2019.6-088"
+                "2019.5-281",
+                "2019.6-166"
             ],
             "metadata": {
                 "description": "The version of the Intel MPI library"
@@ -40,11 +39,10 @@
         },
         "intelMklVersion": {
             "type": "string",
-            "defaultValue": "2019.5-075",
+            "defaultValue": "2020.0-166",
             "allowedValues": [
-                "2018.4-057",
-                "2019.5-075",
-                "2020.0-088"
+                "2019.5-281",
+                "2020.0-166"
             ],
             "metadata": {
                 "description": "The version of the Intel MKL library"
@@ -74,7 +72,7 @@
             "enableInterNodeCommunication": true,
             "maxTasksPerNode": 1,
             "startTask": {
-                "commandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_mpi_start_task_2019_1/mpi_start_task/start_task_install.sh [parameters('intelMpiVersion')] [parameters('intelMklVersion')]\"",
+                "commandLine": "/bin/bash -c \"$AZ_BATCH_APP_PACKAGE_mpi_start_task_2020_1/mpi_start_task/start_task_install.sh [parameters('intelMpiVersion')] [parameters('intelMklVersion')]\"",
                 "userIdentity": {
                     "autoUser": {
                         "scope": "pool",
@@ -90,7 +88,7 @@
             "applicationPackageReferences": [
                 {
                     "applicationId": "MPI_START_TASK",
-                    "version": "2019.1"
+                    "version": "2020.1"
                 }
             ],
             "networkConfiguration": {
