@@ -68,27 +68,6 @@
                 "description": "Environment variable KMP_AFFINITY"
             }
         },
-        "iMpiFabrics": {
-            "type": "string",
-            "defaultValue": "shm:ofi",
-            "metadata": {
-                "description": "Environment variable I_MPI_FABRICS"
-            }
-        },
-        "iMpiDaplProvider": {
-            "type": "string",
-            "defaultValue": "ofa-v2-ib0",
-            "metadata": {
-                "description": "Environment variable I_MPI_DAPL_PROVIDER"
-            }
-        },
-        "iMpiDynamicConnection": {
-            "type": "string",
-            "defaultValue": "0",
-            "metadata": {
-                "description": "Environment variable I_MPI_DYNAMIC_CONNECTION"
-            }
-        },
         "userName": {
             "type": "string",
             "defaultValue": "cmguser",
@@ -183,15 +162,15 @@
                             },
                             {
                                 "name": "I_MPI_FABRICS",
-                                "value": "[parameters('iMpiFabrics')]"
+                                "value": "shm:dapl"
                             },
                             {
                                 "name": "I_MPI_DAPL_PROVIDER",
-                                "value": "[parameters('iMpiDaplProvider')]"
+                                "value": "ofa-v2-ib0"
                             },
                             {
                                 "name": "I_MPI_DYNAMIC_CONNECTION",
-                                "value": "[parameters('iMpiDynamicConnection')]"
+                                "value": "0"
                             }
                         ],
                         "applicationPackageReferences": [
