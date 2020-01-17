@@ -30,6 +30,7 @@
             "type": "string",
             "defaultValue": "2019.6-088",
             "allowedValues": [
+                "2018.4-057",
                 "2019.5-075",
                 "2019.6-088"
             ],
@@ -41,6 +42,7 @@
             "type": "string",
             "defaultValue": "2020.0-088",
             "allowedValues": [
+                "2018.4-057",
                 "2019.5-075",
                 "2020.0-088"
             ],
