@@ -49,6 +49,17 @@
             "metadata": {
                 "description": "The version of the Intel MKL library"
             }
+        },
+        "centOsHpcSku": {
+            "type": "string",
+            "defaultValue": "7.6",
+            "allowedValues": [
+                "7.4",
+                "7.6"
+            ],
+            "metadata": {
+                "description": "Choose 7.4 for Standard_H16r and Standard_H16mr, and 7.6 for Standard_HC44rs"
+            }
         }
     },
     "variables": {
@@ -56,7 +67,7 @@
             "imageReference": {
                 "publisher": "OpenLogic",
                 "offer": "CentOS-HPC",
-                "sku": "7.6",
+                "sku": "[parameters('centOsHpcSku')]",
                 "version": "latest"
             },
             "nodeAgentSKUId": "batch.node.centos 7"
