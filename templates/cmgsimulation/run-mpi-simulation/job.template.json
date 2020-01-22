@@ -32,6 +32,11 @@
             "defaultValue": "beta",
             "allowedValues": [
                 "beta",
+                "beta01",
+                "beta02",
+                "beta03",
+                "beta04",
+                "beta05",
                 "2016.30",
                 "2017.23",
                 "2019.23"
@@ -66,6 +71,34 @@
             "defaultValue": "verbose",
             "metadata": {
                 "description": "Environment variable KMP_AFFINITY"
+            }
+        },
+        "iMpiFabrics": {
+            "type": "string",
+            "defaultValue": "shm:ofi",
+            "metadata": {
+                "description": "Environment variable I_MPI_FABRICS, change to shm:dapl if MPI is less than 2019.6"
+            }
+        },
+        "fiProvider": {
+            "type": "string",
+            "defaultValue": "mlx",
+            "metadata": {
+                "description": "Environment variable FI_PROVIDER"
+            }
+        },
+        "iMpiDaplProvider": {
+            "type": "string",
+            "defaultValue": "ofa-v2-ib0",
+            "metadata": {
+                "description": "Environment variable I_MPI_DAPL_PROVIDER"
+            }
+        },
+        "iMpiDynamicConnection": {
+            "type": "string",
+            "defaultValue": "0",
+            "metadata": {
+                "description": "Environment variable I_MPI_DYNAMIC_CONNECTION"
             }
         },
         "userName": {
@@ -162,15 +195,19 @@
                             },
                             {
                                 "name": "I_MPI_FABRICS",
-                                "value": "shm:dapl"
+                                "value": "[parameters('iMpiFabrics')]"
+                            },
+                            {
+                                "name": "FI_PROVIDER",
+                                "value": "[parameters('fiProvider')]"
                             },
                             {
                                 "name": "I_MPI_DAPL_PROVIDER",
-                                "value": "ofa-v2-ib0"
+                                "value": "[parameters('iMpiDaplProvider')]"
                             },
                             {
-                                "name": "I_MPI_DYNAMIC_CONNECTION",
-                                "value": "0"
+                                "name":"I_MPI_DYNAMIC_CONNECTION",
+                                "value":"[parameters('iMpiDynamicConnection')]"
                             }
                         ],
                         "applicationPackageReferences": [
