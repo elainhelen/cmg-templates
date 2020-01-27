@@ -152,10 +152,6 @@
             "id": "Job-[parameters('userName')]",
             "displayName": "Job-[parameters('userName')]",
             "onAllTasksComplete": "terminateJob",
-            "constraints": {
-                "maxWallClockTime": "PT24H",
-                "maxTaskRetryCount": 0
-            },
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
