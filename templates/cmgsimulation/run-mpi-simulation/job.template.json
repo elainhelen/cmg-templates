@@ -262,7 +262,7 @@
                                     }
                                 },
                                 "uploadOptions": {
-                                    "uploadCondition": "taskSuccess"
+                                    "uploadCondition": "taskCompletion"
                                 }
                             }
                         ]
