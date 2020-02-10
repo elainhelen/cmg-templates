@@ -9,7 +9,7 @@
         },
         "nodeSize": {
             "type": "string",
-            "defaultValue": "Standard_H16r",
+            "defaultValue": "Standard_HC44rs",
             "allowedValues": [
                 "Standard_H16r",
                 "Standard_H16mr",
@@ -28,7 +28,7 @@
         },
         "intelMpiVersion": {
             "type": "string",
-            "defaultValue": "2019.6-088",
+            "defaultValue": "2019.5-075",
             "allowedValues": [
                 "2018.4-057",
                 "2019.5-075",
@@ -40,7 +40,7 @@
         },
         "intelMklVersion": {
             "type": "string",
-            "defaultValue": "2020.0-088",
+            "defaultValue": "2019.5-075",
             "allowedValues": [
                 "2018.4-057",
                 "2019.5-075",
