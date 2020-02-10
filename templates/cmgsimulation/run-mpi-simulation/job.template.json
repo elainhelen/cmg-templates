@@ -87,9 +87,9 @@
                 "description": "Environment variable I_MPI_DEBUG"
             }
         },
-        "userName": {
+        "userJobName": {
             "type": "string",
-            "defaultValue": "cmguser",
+            "defaultValue": "jobName",
             "metadata": {
                 "description": "The owner name of the Azure Batch job, also used to prefix simulation outputs"
             }
@@ -128,8 +128,8 @@
     "job": {
         "type": "Microsoft.Batch/batchAccounts/jobs",
         "properties": {
-            "id": "Job-[parameters('userName')]",
-            "displayName": "Job-[parameters('userName')]",
+            "id": "Job-[parameters('userJobName')]",
+            "displayName": "Job-[parameters('userJobName')]",
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
@@ -137,8 +137,8 @@
                 "type": "taskCollection",
                 "tasks": [
                     {
-                        "id": "Task-[parameters('userName')]",
-                        "displayName": "Task-[parameters('userName')]",
+                        "id": "Task-[parameters('userJobName')]",
+                        "displayName": "Task-[parameters('userJobName')]",
                         "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_[parameters('mpiRunScriptVersion')]/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] \"[parameters('datFileName')]\" [parameters('dedicatedVmCount')] \"[parameters('simulatorSwitches')]\"'",
                         "userIdentity": {
                             "autoUser": {
@@ -204,7 +204,7 @@
                                 "destination": {
                                     "autoStorage": {
                                         "fileGroup": "[parameters('outputFileGroup')]",
-                                        "path": "[parameters('userName')]/logs/[parameters('userName')]-stdout.txt"
+                                        "path": "[parameters('userJobName')]/logs/[parameters('userJobName')]-stdout.txt"
                                     }
                                 },
                                 "uploadOptions": {
@@ -216,7 +216,7 @@
                                 "destination": {
                                     "autoStorage": {
                                         "fileGroup": "[parameters('outputFileGroup')]",
-                                        "path": "[parameters('userName')]/logs/[parameters('userName')]-stderr.txt"
+                                        "path": "[parameters('userJobName')]/logs/[parameters('userJobName')]-stderr.txt"
                                     }
                                 },
                                 "uploadOptions": {
@@ -228,7 +228,7 @@
                                 "destination": {
                                     "autoStorage": {
                                         "fileGroup": "[parameters('outputFileGroup')]",
-                                        "path": "[parameters('userName')]"
+                                        "path": "[parameters('userJobName')]"
                                     }
                                 },
                                 "uploadOptions": {
