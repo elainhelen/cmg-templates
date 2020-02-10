@@ -47,7 +47,7 @@
         },
         "mpiRunScriptVersion": {
             "type": "string",
-            "defaultValue": "2020_1",
+            "defaultValue": "2020_2",
             "metadata": {
                 "description": "The version of the run script application"
             }
@@ -77,28 +77,14 @@
             "type": "string",
             "defaultValue": "shm:ofi",
             "metadata": {
-                "description": "Environment variable I_MPI_FABRICS, change to shm:dapl if MPI is less than 2019.6"
+                "description": "Environment variable I_MPI_FABRICS"
             }
         },
-        "fiProvider": {
-            "type": "string",
-            "defaultValue": "mlx",
-            "metadata": {
-                "description": "Environment variable FI_PROVIDER"
-            }
-        },
-        "iMpiDaplProvider": {
-            "type": "string",
-            "defaultValue": "ofa-v2-ib0",
-            "metadata": {
-                "description": "Environment variable I_MPI_DAPL_PROVIDER"
-            }
-        },
-        "iMpiDynamicConnection": {
+        "iMpiDebug": {
             "type": "string",
             "defaultValue": "0",
             "metadata": {
-                "description": "Environment variable I_MPI_DYNAMIC_CONNECTION"
+                "description": "Environment variable I_MPI_DEBUG"
             }
         },
         "userName": {
@@ -106,13 +92,6 @@
             "defaultValue": "cmguser",
             "metadata": {
                 "description": "The owner name of the Azure Batch job, also used to prefix simulation outputs"
-            }
-        },
-        "taskName": {
-            "type": "string",
-            "defaultValue": "testTask",
-            "metadata": {
-                "description": "The name of the task"
             }
         },
         "inputFileGroup": {
@@ -151,7 +130,6 @@
         "properties": {
             "id": "Job-[parameters('userName')]",
             "displayName": "Job-[parameters('userName')]",
-            "onAllTasksComplete": "terminateJob",
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
@@ -159,8 +137,8 @@
                 "type": "taskCollection",
                 "tasks": [
                     {
-                        "id": "[parameters('userName')]-[parameters('taskName')]",
-                        "displayName": "[parameters('taskName')]",
+                        "id": "Task-[parameters('userName')]",
+                        "displayName": "Task-[parameters('userName')]",
                         "commandLine": "/bin/bash -c 'python3.7 $AZ_BATCH_APP_PACKAGE_cmgcloud_mpi_[parameters('mpiRunScriptVersion')]/cmgcloud_mpi/run_mpi_simulation.py [parameters('cmgApplicationPackage')] [parameters('cmgApplicationPackageVersion')] \"[parameters('datFileName')]\" [parameters('dedicatedVmCount')] \"[parameters('simulatorSwitches')]\"'",
                         "userIdentity": {
                             "autoUser": {
@@ -190,20 +168,12 @@
                                 "value": "1"
                             },
                             {
-                                "name": "I_MPI_FABRICS",
+                                "name":"I_MPI_FABRICS",
                                 "value": "[parameters('iMpiFabrics')]"
                             },
                             {
-                                "name": "FI_PROVIDER",
-                                "value": "[parameters('fiProvider')]"
-                            },
-                            {
-                                "name": "I_MPI_DAPL_PROVIDER",
-                                "value": "[parameters('iMpiDaplProvider')]"
-                            },
-                            {
-                                "name":"I_MPI_DYNAMIC_CONNECTION",
-                                "value":"[parameters('iMpiDynamicConnection')]"
+                                "name": "I_MPI_DEBUG",
+                                "value": "[parameters('iMpiDebug')]"
                             }
                         ],
                         "applicationPackageReferences": [
@@ -234,7 +204,7 @@
                                 "destination": {
                                     "autoStorage": {
                                         "fileGroup": "[parameters('outputFileGroup')]",
-                                        "path": "[parameters('userName')]/logs/[parameters('taskName')]-stdout.txt"
+                                        "path": "[parameters('userName')]/logs/[parameters('userName')]-stdout.txt"
                                     }
                                 },
                                 "uploadOptions": {
@@ -246,7 +216,7 @@
                                 "destination": {
                                     "autoStorage": {
                                         "fileGroup": "[parameters('outputFileGroup')]",
-                                        "path": "[parameters('userName')]/logs/[parameters('taskName')]-stderr.txt"
+                                        "path": "[parameters('userName')]/logs/[parameters('userName')]-stderr.txt"
                                     }
                                 },
                                 "uploadOptions": {
@@ -258,7 +228,7 @@
                                 "destination": {
                                     "autoStorage": {
                                         "fileGroup": "[parameters('outputFileGroup')]",
-                                        "path": "[parameters('userName')]/[parameters('taskName')]"
+                                        "path": "[parameters('userName')]"
                                     }
                                 },
                                 "uploadOptions": {
