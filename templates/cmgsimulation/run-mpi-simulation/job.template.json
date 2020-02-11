@@ -130,6 +130,7 @@
         "properties": {
             "id": "Job-[parameters('userJobName')]",
             "displayName": "Job-[parameters('userJobName')]",
+            "onAllTasksComplete": "terminateJob",
             "poolInfo": {
                 "poolId": "[parameters('poolId')]"
             },
